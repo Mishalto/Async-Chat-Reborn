@@ -11,14 +11,17 @@ Server::Server() : ep(tcp::v4(), server_port), acc(io_context, ep) {
 
 // Starting the server
 void Server::start() {
-    is_running.store(true);
+    is_running.store(true); // The operation of the server directly depends on the flag
     std::cout << "The server has started on port " << server_port << "..." << '\n';
     std::cout << "Waiting the connections...\n";
     while(is_running) {
-
+        // Create a socket, error_code
+        // and wait for connection
         tcp::socket socket(io_context);
         boost::system::error_code ec;
-        acc.accept(socket, ec);
+        acc.accept(socket, ec); // The accept is a blocking operation
+
+        // Error handler
         if (ec) {
             std::cout << ec.message() << '\n';
         }
@@ -33,7 +36,3 @@ void Server::start() {
 void Server::stop() {
     is_running.store(false);
 }
-
-// void Server::error_handler(boost::system::error_code& ec) const
-// {
-// }
