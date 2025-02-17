@@ -7,10 +7,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(BOOST_ROOT "D:/Libs/boost_1_87_0")
 
-add_executable(Server src/main.cpp)
+add_executable(Server src/main.cpp src/core/Server.cpp)
 
 target_include_directories(Server PRIVATE ${BOOST_ROOT})
-
 target_include_directories(Server PRIVATE include)
+target_include_directories(Server PRIVATE %{CMAKE_SOURCE_DIR}/include)
 
 target_compile_options(Server PRIVATE -Wall -Wextra -Werror)

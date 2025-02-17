@@ -1,9 +1,10 @@
 #include <iostream>
 #include <boost/asio.hpp>
+#include <Server.hpp>
 
 int main()
 {
-    std::cout << "Server\n";
+    Server serv;
 
     return 0;
 }
