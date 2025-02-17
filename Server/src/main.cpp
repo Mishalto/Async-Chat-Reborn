@@ -9,8 +9,6 @@ int main()
 {
     Server server;
     std::thread server_thread(&Server::start, std::ref(server));
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    server.stop();
 
     server_thread.join();
 

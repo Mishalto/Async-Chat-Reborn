@@ -1,0 +1,18 @@
+#pragma once
+
+#include <boost/asio.hpp>
+
+using boost::asio::ip::tcp;
+
+class Client
+{
+private:
+    boost::asio::io_context io_context;
+
+    // Setting up a connection to the server
+    tcp::endpoint ep;
+public:
+    Client();
+
+    void start_connection();
+};

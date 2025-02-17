@@ -7,10 +7,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(BOOST_ROOT "D:/Libs/boost_1_87_0")
 
-add_executable(Client src/main.cpp)
+add_executable(Client src/main.cpp src/core/Client.cpp)
+
+add_definitions(-D_WIN32_WINNT=0x0A00) # win10
 
 target_include_directories(Client PRIVATE ${BOOST_ROOT})
-
 target_include_directories(Client PRIVATE include)
+target_include_directories(Client PRIVATE %{CMAKE_SOURCE_DIR}/include)
 
 target_compile_options(Client PRIVATE -Wall -Wextra -Werror)

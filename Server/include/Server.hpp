@@ -21,6 +21,4 @@ public:
 
     void start();
     void stop();
-
-    void error_handler(boost::system::error_code& ec) const;
 };

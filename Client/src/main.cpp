@@ -1,9 +1,11 @@
 #include <iostream>
 #include <boost/asio.hpp>
+#include <Client.hpp>
 
 int main()
 {
-    std::cout << "Client\n";
+    Client cl;
+    cl.start_connection();
 
     return 0;
 }
