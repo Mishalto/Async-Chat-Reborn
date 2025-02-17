@@ -9,6 +9,8 @@ set(BOOST_ROOT "D:/Libs/boost_1_87_0")
 
 add_executable(Server src/main.cpp src/core/Server.cpp)
 
+add_definitions(-D_WIN32_WINNT=0x0A00) # win 10
+
 target_include_directories(Server PRIVATE ${BOOST_ROOT})
 target_include_directories(Server PRIVATE include)
 target_include_directories(Server PRIVATE %{CMAKE_SOURCE_DIR}/include)
