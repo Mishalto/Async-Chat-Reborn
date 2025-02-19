@@ -19,4 +19,5 @@ public:
 
     std::string receive_message(tcp::socket& socket);
     void receive_loop(tcp::socket& socket);
+    void send_message(tcp::socket& socket);
 };

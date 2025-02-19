@@ -22,7 +22,7 @@ void Client::start_connection() {
 void Client::chat(tcp::socket& socket) {
     std::thread receive_th(&Client::receive_loop, this, std::ref(socket));
     for(;;) {
-
+        send_message(socket);
     }
     receive_th.join();
 }
@@ -50,5 +50,18 @@ void Client::receive_loop(tcp::socket& socket) {
         } else {
             std::this_thread::sleep_for(std::chrono::seconds(2));
         }
+    }
+}
+
+void Client::send_message(tcp::socket& socket) {
+    std::cout << "You: ";
+
+    std::string message;
+    std::getline(std::cin, message);
+
+    boost::system::error_code ec;
+    boost::asio::write(socket, boost::asio::buffer(message), ec);
+    if (ec) {
+        std::cerr << "send_message error\n" << ec.message() << '\n';
     }
 }
