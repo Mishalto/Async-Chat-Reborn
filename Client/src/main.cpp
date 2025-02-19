@@ -4,6 +4,8 @@
 
 int main()
 {
+    setlocale(LC_ALL, "");
+
     Client cl;
     cl.start_connection();
 

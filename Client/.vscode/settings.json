@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.ipp": "cpp",
+        "regex": "cpp",
+        "xlocale": "cpp",
+        "xstring": "cpp"
+    }
+}

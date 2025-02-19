@@ -15,4 +15,7 @@ public:
     Client();
 
     void start_connection();
+    void chat(tcp::socket& socket);
+
+    std::string receive_message(tcp::socket& socket);
 };
