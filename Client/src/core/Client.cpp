@@ -12,7 +12,7 @@ void Client::start_connection() {
     boost::system::error_code ec;
     socket.connect(ep, ec);
     if (ec) {
-        std::cerr << ec.message() << '\n';
+        std::cerr << "start_connection error\n" << ec.message() << '\n';
     } else {
         std::cout << "Connected.\n";
         chat(socket);
@@ -20,10 +20,11 @@ void Client::start_connection() {
 }
 
 void Client::chat(tcp::socket& socket) {
+    std::thread receive_th(&Client::receive_loop, this, std::ref(socket));
     for(;;) {
-        std::thread receive_th(&Client::receive_message, this, std::ref(socket));
-        receive_th.detach();
+        
     }
+    receive_th.join();
 }
 
 std::string Client::receive_message(tcp::socket& socket) {
@@ -31,11 +32,25 @@ std::string Client::receive_message(tcp::socket& socket) {
     boost::system::error_code ec;
     size_t length = boost::asio::read(socket, boost::asio::buffer(data), ec);
     if (ec) {
-        std::cerr << "Receive error." << '\n' << ec.message() << '\n';
-        std::this_thread::sleep_for(std::chrono::seconds(5));
+        if(ec != boost::asio::error::eof) {
+            std::cerr << "receive message error\n" << ec.message() << '\n';
+        }
     } else {
         return std::string(data.data(), length);
     }
 
     return "";
+}
+
+void Client::receive_loop(tcp::socket& socket) {
+    while(true) {
+        std::string message = receive_message(socket);
+        if(!message.empty()) {
+            std::cout << message << '\n';
+        }
+        else {
+            std::cout << "<blank>\n" << '\n';
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+        }
+    }
 }

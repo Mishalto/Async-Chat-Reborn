@@ -18,4 +18,5 @@ public:
     void chat(tcp::socket& socket);
 
     std::string receive_message(tcp::socket& socket);
+    void receive_loop(tcp::socket& socket);
 };
