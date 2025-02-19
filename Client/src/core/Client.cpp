@@ -22,7 +22,7 @@ void Client::start_connection() {
 void Client::chat(tcp::socket& socket) {
     std::thread receive_th(&Client::receive_loop, this, std::ref(socket));
     for(;;) {
-        
+
     }
     receive_th.join();
 }
@@ -30,9 +30,9 @@ void Client::chat(tcp::socket& socket) {
 std::string Client::receive_message(tcp::socket& socket) {
     std::array<char, 1024> data;
     boost::system::error_code ec;
-    size_t length = boost::asio::read(socket, boost::asio::buffer(data), ec);
+    size_t length = socket.read_some(boost::asio::buffer(data), ec);
     if (ec) {
-        if(ec != boost::asio::error::eof) {
+        if (ec != boost::asio::error::eof) {
             std::cerr << "receive message error\n" << ec.message() << '\n';
         }
     } else {
@@ -47,10 +47,8 @@ void Client::receive_loop(tcp::socket& socket) {
         std::string message = receive_message(socket);
         if(!message.empty()) {
             std::cout << message << '\n';
-        }
-        else {
-            std::cout << "<blank>\n" << '\n';
-            std::this_thread::sleep_for(std::chrono::seconds(3));
+        } else {
+            std::this_thread::sleep_for(std::chrono::seconds(2));
         }
     }
 }
