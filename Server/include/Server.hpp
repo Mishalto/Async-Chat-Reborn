@@ -18,10 +18,4 @@ private:
     std::atomic<bool> is_running;   // std::atomic is needed for multithreading, for this project just bool will be enough / будет достаточно
 public:
     Server();
-
-    void start();
-    void stop();
-
-    void receive_loop(tcp::socket& socket);
-    std::string receive_message(tcp::socket& socket);
 };
