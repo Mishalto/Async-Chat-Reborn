@@ -1,15 +1,14 @@
-#include <boost/asio.hpp>
 #include <Server.hpp>
-
-#include <chrono>
 #include <iostream>
-#include <thread>
-
 int main()
 {
     setlocale(LC_ALL, "");
 
-    Server server;
+    Server server{12345};
+    std::cout << "Started\n";
 
+    server.run();
+
+    std::cout << "End\n";
     return 0;
 }
