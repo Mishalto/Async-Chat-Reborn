@@ -2,23 +2,17 @@
 
 #include <boost/asio.hpp>
 
+#include <iostream>
+
 using boost::asio::ip::tcp;
 
-class Client
-{
+class Client {
 private:
-    boost::asio::io_context io_context;
-    // Setting up a connection to the server
-    tcp::endpoint ep;
+    boost::asio::io_context io_context_;
+    tcp::endpoint ep_;
+    tcp::socket socket_;
+
+    void start();
 public:
     Client();
-
-    // Connect methods
-    void start_connection();
-    // Sending/receiving
-    std::string receive_message(tcp::socket& socket);
-    void receive_loop(tcp::socket& socket);
-    void send_message(tcp::socket& socket);
-    // Main
-    void chat(tcp::socket& socket);
 };
