@@ -15,6 +15,8 @@ void Session::do_read() {
         if (!err) {
             std::cout << std::string(data_.data(), length);
             do_read();
+        } else {
+            std::cerr << err.message() << '\n';
         }
     });
 }

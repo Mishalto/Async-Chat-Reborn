@@ -17,5 +17,6 @@ private:
 public:
     Client();
 
+    void start_session();
     void run();
 };
