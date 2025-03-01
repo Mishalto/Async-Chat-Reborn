@@ -9,6 +9,8 @@ void Client::start_session() {
     socket->connect(ep_, err);
     if (!err) {
         std::cout << "Connected\n";
+        auto session = std::make_shared<Session>(std::move(*socket));
+        session->start();
     }
 }
 
