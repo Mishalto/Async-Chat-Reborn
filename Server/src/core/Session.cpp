@@ -3,7 +3,8 @@
 Session::Session(tcp::socket socket) : socket_(std::move(socket)) {}
 
 void Session::start() {
-    do_read();
+    std::thread read_thread(&Session::do_read, this);
+    read_thread.join();
 }
 
 void Session::do_read() {
