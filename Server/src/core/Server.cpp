@@ -4,6 +4,10 @@
 
 using boost::asio::ip::tcp;
 
+Server::Server(short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) {
+    start_accept();
+}
+
 void Server::start_accept() {
     auto socket = std::make_shared<tcp::socket>(io_context);
     acceptor_.async_accept(*socket, [socket](const boost::system::error_code err){
@@ -15,9 +19,6 @@ void Server::start_accept() {
     });
 }
 
-Server::Server(short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) {
-    start_accept();
-}
 
 void Server::run() {
     io_context.run();

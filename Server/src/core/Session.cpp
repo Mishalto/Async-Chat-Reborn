@@ -1,7 +1,12 @@
 #include <Session.hpp>
 
+Session::Session(tcp::socket socket) : socket_(std::move(socket)) {}
+
 void Session::start() {
-    do_read();
+    for(;;) {
+        do_read();
+        send();
+    }
 }
 
 void Session::do_read() {
@@ -18,4 +23,15 @@ void Session::do_read() {
             }
         }
     });
+}
+
+void Session::send() {
+    std::cout << "Message: ";
+    std::string message;
+    std::cin >> message;
+    boost::system::error_code err;
+    boost::asio::write(socket_, boost::asio::buffer(message), err);
+    if (err) {
+        std::cerr << err.message() << '\n';
+    }
 }

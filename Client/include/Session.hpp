@@ -2,22 +2,19 @@
 
 #include <boost/asio.hpp>
 
-#include <iostream>
 #include <array>
+#include <memory>
+#include <iostream>
 
 using boost::asio::ip::tcp;
 
-class Client {
+class Session : public std::enable_shared_from_this<Session> {
 private:
-    bool is_connected;
-    boost::asio::io_context io_context_;
-    tcp::endpoint ep_;
     tcp::socket socket_;
-
     std::array<char, 1024> data_;
-public:
-    Client();
 
-    void start();
     void do_read();
+    void send();
+public:
+    Session(tcp::socket socket);
 };

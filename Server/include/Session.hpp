@@ -1,6 +1,7 @@
 #pragma once
 
 #include <boost/asio.hpp>
+
 #include <iostream>
 #include <array>
 #include <memory>
@@ -13,8 +14,9 @@ private:
     std::array<char, 1024> data_;
 
     void do_read();
+    void send();
 public:
-    Session(tcp::socket socket) : socket_(std::move(socket)) {}
+    Session(tcp::socket socket);
 
     void start();
 };
