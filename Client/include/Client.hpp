@@ -2,6 +2,8 @@
 
 #include <boost/asio.hpp>
 
+#include <Session.hpp>
+
 #include <iostream>
 #include <array>
 
@@ -9,15 +11,11 @@ using boost::asio::ip::tcp;
 
 class Client {
 private:
-    bool is_connected;
     boost::asio::io_context io_context_;
     tcp::endpoint ep_;
-    tcp::socket socket_;
 
-    std::array<char, 1024> data_;
 public:
     Client();
 
-    void start();
-    void do_read();
+    void run();
 };

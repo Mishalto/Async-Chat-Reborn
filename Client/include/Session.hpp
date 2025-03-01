@@ -17,4 +17,6 @@ private:
     void send();
 public:
     Session(tcp::socket socket);
+
+    void start();
 };

@@ -5,7 +5,7 @@ int main()
     setlocale(LC_ALL, "");
 
     Client cl;
-    cl.start();
-    
+    cl.run();
+
     return 0;
 }
