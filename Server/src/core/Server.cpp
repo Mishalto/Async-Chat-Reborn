@@ -11,9 +11,14 @@ Server::Server(short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port
 void Server::start_accept() {
     std::cout << "Waiting client...\n";
     auto socket = std::make_shared<tcp::socket>(io_context);
-    acceptor_.async_accept(*socket, [socket](const boost::system::error_code err){
+    acceptor_.async_accept(*socket, [socket, this](const boost::system::error_code err){
         if (!err) {
-            std::cout << "Connected: " << socket->remote_endpoint() << '\n';
+            clients_list[socket->remote_endpoint().address().to_string()] = "Misha";
+            for(auto& s : clients_list) {
+                if(socket->remote_endpoint().address().to_string() == s.first) {
+                    std::cout << s.second << " connected." << '\n';
+                }
+            }
             auto session = std::make_shared<Session>(std::move(*socket));
             session->start();
         }

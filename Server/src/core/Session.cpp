@@ -22,14 +22,3 @@ void Session::do_read() {
         }
     });
 }
-
-void Session::send() {
-    std::cout << "Message: ";
-    std::string message;
-    std::cin >> message;
-    boost::system::error_code err;
-    boost::asio::write(socket_, boost::asio::buffer(message), err);
-    if (err) {
-        std::cerr << err.message() << '\n';
-    }
-}
