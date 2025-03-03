@@ -11,8 +11,6 @@ private:
     boost::asio::io_context io_context;
     tcp::acceptor acceptor_;
 
-    std::unordered_map<std::string, std::string> clients_list;
-
     void start_accept();
 public:
     Server(short port);
