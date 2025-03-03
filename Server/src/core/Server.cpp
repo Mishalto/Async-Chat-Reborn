@@ -1,6 +1,5 @@
 #include <Server.hpp>
 #include <iostream>
-#include <Session.hpp>
 
 using boost::asio::ip::tcp;
 
@@ -14,8 +13,6 @@ void Server::start_accept() {
     acceptor_.async_accept(*socket, [socket](const boost::system::error_code err){
         if (!err) {
             std::cout << "Connected: " << socket->remote_endpoint().address().to_string() << '\n';
-            auto session = std::make_shared<Session>(std::move(*socket));
-            session->start();
         }
     });
 }
