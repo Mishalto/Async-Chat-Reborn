@@ -7,6 +7,6 @@ int main()
     Server server{12345};
 
     server.run();
-    
+
     return 0;
 }
