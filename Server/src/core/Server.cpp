@@ -13,6 +13,8 @@ void Server::start_accept() {
     acceptor_.async_accept(*socket, [socket, this](const boost::system::error_code err){
         if (!err) {
             active_client_.add_client(socket->remote_endpoint().address().to_string(), socket);
+            std::cout << "Client connected.\n";
+            start_accept();
         }
     });
 }
