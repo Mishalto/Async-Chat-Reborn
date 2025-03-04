@@ -34,15 +34,3 @@ void Server::do_accept(ActiveClients& ac) {
 void Server::io_run() {
     io_context_.run();
 }
-
-// void Server::start_accept() {
-//     std::cout << "[Server]Waiting client...\n";
-//     auto socket = std::make_shared<tcp::socket>(io_context_);
-//     acceptor_.async_accept(*socket, [socket, this](const boost::system::error_code err){
-//         if (!err) {
-//             active_client_.add_client(socket->remote_endpoint().address().to_string(), socket);
-//             std::cout << "[Server]Client connected.\n";
-//             start_accept();
-//         }
-//     });
-// }

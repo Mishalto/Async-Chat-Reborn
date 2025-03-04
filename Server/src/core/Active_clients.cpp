@@ -11,11 +11,12 @@ void ActiveClients::add_client(const std::string& ip, std::shared_ptr<tcp::socke
     std::cout << "[ActiveClients]Client added\n";
 }
 
-void ActiveClients::start_listening() const
+void ActiveClients::start_listening()
 {
     std::cout << "[Active_clients]Listening started.\n";
     for (;;) {
         for (auto &client : active_clients_) {
+            std::lock_guard<std::mutex> guard(mtx);
             if (client.second.check_message()) {
                 std::cout << client.second.get_message() << '\n';
             }

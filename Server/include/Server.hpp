@@ -13,6 +13,7 @@ class Server {
 private:
     bool is_running;
     ActiveClients active_client_;
+
     boost::asio::io_context io_context_;
     tcp::acceptor acceptor_;
 public:

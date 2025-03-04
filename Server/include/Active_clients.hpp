@@ -14,9 +14,11 @@ using boost::asio::ip::tcp;
 class ActiveClients {
 private:
     std::unordered_map<std::string, Client_data> active_clients_;
+
+    std::mutex mtx;
 public:
     ActiveClients();
     void add_client(const std::string& ip, std::shared_ptr<tcp::socket> socket_ptr);
 
-    void start_listening() const;
+    void start_listening();
 };
