@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <mutex>
 
 #include <boost/asio.hpp>
 
