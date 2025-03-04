@@ -7,7 +7,7 @@
 
 using boost::asio::ip::tcp;
 
-class Client_data {
+class Client_data : public std::enable_shared_from_this<Client_data> {
 private:
     std::shared_ptr<tcp::socket> socket_;
     std::string name_;

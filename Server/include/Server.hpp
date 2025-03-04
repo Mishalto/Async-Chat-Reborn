@@ -11,14 +11,14 @@ using boost::asio::ip::tcp;
 
 class Server {
 private:
-    boost::asio::io_context io_context;
+    bool is_running;
+    ActiveClients active_client_;
+    boost::asio::io_context io_context_;
     tcp::acceptor acceptor_;
-
-    Active_clients active_client_;
-
-    void start_accept();
 public:
     Server(short port);
 
-    void run();
+    void start();
+    void do_accept(ActiveClients& ac);
+    void io_run();
 };

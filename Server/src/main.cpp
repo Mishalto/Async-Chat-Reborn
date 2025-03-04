@@ -5,8 +5,9 @@ int main()
     setlocale(LC_ALL, "");
 
     Server server{12345};
+    server.start();
 
-    server.run();
+    server.io_run();
 
     return 0;
 }

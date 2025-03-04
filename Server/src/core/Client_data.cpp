@@ -11,9 +11,10 @@ Client_data::Client_data(std::shared_ptr<tcp::socket> socket_ptr) : socket_(std:
 
 void Client_data::do_read() {
     std::cout << name_ << " is listening.\n";
-    socket_->async_read_some(boost::asio::buffer(data_), [this](const boost::system::error_code err, size_t length) {
+    auto self(shared_from_this());
+    socket_->async_read_some(boost::asio::buffer(data_), [this, self](const boost::system::error_code err, size_t length) {
         if (!err) {
-            std::cout << "[Client_data]Message received.\n";
+            std::cout << "[Client_data]Message from" << name_ << "received.\n";
             message_ = std::string(data_.data(), length);
             has_message_ = true;
             do_read();
