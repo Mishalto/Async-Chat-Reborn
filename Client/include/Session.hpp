@@ -14,6 +14,7 @@ private:
     std::array<char, 1024> data_;
 
     void do_read();
+    void do_send();
 public:
     Session(tcp::socket socket);
 

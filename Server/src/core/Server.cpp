@@ -1,26 +1,36 @@
 #include <Server.hpp>
 #include <iostream>
-#include <Session.hpp>
 
 using boost::asio::ip::tcp;
 
-Server::Server(short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) {
-    start_accept();
+Server::Server(short port) : is_running(false), acceptor_(io_context_, tcp::endpoint(tcp::v4(), port)) {}
+
+void Server::start() {
+    is_running = true;
+    std::cout << "[Server]Server started.\n";
+
+    std::thread accept_thread(&Server::do_accept, this, std::ref(active_client_));
+    while(is_running) {
+
+    }
+    accept_thread.join();
 }
 
-void Server::start_accept() {
-    std::cout << "Waiting client...\n";
-    auto socket = std::make_shared<tcp::socket>(io_context);
-    acceptor_.async_accept(*socket, [socket](const boost::system::error_code err){
+void Server::do_accept(ActiveClients& ac) {
+    std::cout << "[Server]Waiting client...\n";
+    for (;;) {
+        auto socket = std::make_shared<tcp::socket>(io_context_);
+        boost::system::error_code err;
+        acceptor_.accept(*socket, err);
         if (!err) {
-            std::cout << "Connected: " << socket->remote_endpoint().address().to_string() << '\n';
-            auto session = std::make_shared<Session>(std::move(*socket));
-            session->start();
+            std::cout << "[Server]Client connected.\n";
+            ac.add_client(socket->remote_endpoint().address().to_string(), std::move(socket));
+        } else {
+            std::cerr << err.message() << '\n';
         }
-    });
+    }
 }
 
-
-void Server::run() {
-    io_context.run();
+void Server::io_run() {
+    io_context_.run();
 }

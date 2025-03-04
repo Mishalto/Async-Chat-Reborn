@@ -1,19 +1,25 @@
 #pragma once
+
 #include <boost/asio.hpp>
 
-#include <unordered_map>
 #include <string>
+
+#include <Client_data.hpp>
+#include <Active_clients.hpp>
 
 using boost::asio::ip::tcp;
 
 class Server {
 private:
-    boost::asio::io_context io_context;
-    tcp::acceptor acceptor_;
+    bool is_running;
+    ActiveClients active_client_;
 
-    void start_accept();
+    boost::asio::io_context io_context_;
+    tcp::acceptor acceptor_;
 public:
     Server(short port);
 
-    void run();
+    void start();
+    void do_accept(ActiveClients& ac);
+    void io_run();
 };

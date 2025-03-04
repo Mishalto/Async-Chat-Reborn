@@ -7,6 +7,7 @@ Session::Session(tcp::socket socket) : socket_(std::move(socket)) {
 void Session::start() {
     for(;;) {
         do_read();
+        do_send();
     }
 }
 
@@ -20,4 +21,12 @@ void Session::do_read() {
             std::cerr << err.message() << '\n';
         }
     });
+}
+
+void Session::do_send() {
+    std::cout << "Message: ";
+    std::string message;
+    std::cin >> message;
+
+    boost::asio::write(socket_, boost::asio::buffer(message));
 }
